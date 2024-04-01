@@ -1,6 +1,5 @@
-"use client";
 import Image from "next/image";
-import styles from "./page.module.css";
+import styles from "./page.module.scss";
 import {
   addDoc,
   collection,
@@ -22,8 +21,14 @@ export default async function Home() {
   const docSnap1 = await getDoc(
     doc(AmpleFirestore, "ample", "TLjH8C9ONcCD0nMGwk12")
   );
+
   console.log("doc data : ", docSnap1.data());
 
+  const all = await getDocs(q);
+
+  all.forEach((doc) => {
+    console.log(" doc  :", doc);
+  });
   // const collectionRef = collection(AmpleFirestore, "ample");
   // await addDoc(collectionRef, {
   //   red: 178,
