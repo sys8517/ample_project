@@ -11,23 +11,24 @@ import {
 } from "firebase/firestore";
 import { AmpleFirestore } from "@/firebase";
 import moment from "moment";
-import Button from "@/components/Button";
+import Home from "./Home";
+import Page2 from "./page2/page";
 
-export default async function Home() {
+export default async function HomePage() {
   const q = query(collection(AmpleFirestore, "ample"));
-  console.log("asdf : ", q);
+  // console.log("asdf : ", q);
 
-  // const data = getDocs(q);
-  const docSnap1 = await getDoc(
-    doc(AmpleFirestore, "ample", "TLjH8C9ONcCD0nMGwk12")
-  );
+  const data = await getDocs(q);
+  const docSnap1 = await getDoc(doc(AmpleFirestore, "ample", "ample1"));
 
-  console.log("doc data : ", docSnap1.data());
+  // console.log("doc data : ", docSnap1.data());
+  // console.log("allData : ", data);
 
-  const all = await getDocs(q);
-
-  all.forEach((doc) => {
-    console.log(" doc  :", doc);
+  // const all = await getDocs(q);
+  let dataList: any[] = [];
+  data.forEach((doc) => {
+    // console.log(" doc  :", doc.data());
+    dataList.push(doc.data());
   });
   // const collectionRef = collection(AmpleFirestore, "ample");
   // await addDoc(collectionRef, {
@@ -40,11 +41,13 @@ export default async function Home() {
   // const docRef = doc(AmpleFirestore, "ample");
   // const docSnap = await getDoc(docRef);
   // console.log("doc : ", docSnap);
-
+  const hello = () => {
+    console.log("함수 전달됨");
+  };
   return (
     <main className={styles.main}>
-      <div>dfs</div>
-      <Button />
+      <Home ampleList={dataList || []} />
+      <Page2 func={hello} />
     </main>
   );
 }
